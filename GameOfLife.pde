@@ -114,6 +114,8 @@ int checkNeighbors(int x, int y){
 }
 
 void drawCells(int[][] cells){
+  fill(255,0,0);
+  noStroke();
   for (int i = 0; i <= 7; i++){
     for (int j = 0; j <= 12; j++){
       if(cells[j][i] == 1){
@@ -121,7 +123,17 @@ void drawCells(int[][] cells){
       }
     }
   }
-  
+}
+
+void drawGrid(){
+  stroke(0);
+  strokeWeight(1);
+  for (int i = 0; i <= 12; i++){
+    line(i*100, 0, i*100, 720);
+  }
+  for (int i = 0; i <= 7; i++){
+    line(0, i*100, 1280, i*100);
+  }
 }
 
 void setup(){
@@ -130,8 +142,6 @@ void setup(){
 }
 
 void draw(){
-  noStroke();
-  fill(255,0,0);
   if (gameState == "runCells"){
     //Logic stuff
     updateCells(cells);
@@ -139,6 +149,7 @@ void draw(){
     //drawing stuff
     background(200);
     drawCells(cells);
+    drawGrid();
     delay(delayTime);
     
   }else if (gameState == "drawMode"){
@@ -157,6 +168,7 @@ void draw(){
       }
     }
     
+    drawGrid();
     drawCells(cells);
     delay(100); //Gives a delay for user to let go of click button
     
