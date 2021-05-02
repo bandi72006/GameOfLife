@@ -1,7 +1,10 @@
 //Bandar Al Aish
 
-int gridHeight = 8;
-int gridWidth = 13;
+int gridHeight = 100;
+int gridWidth = 100;
+
+int xOffset = 0;
+int yOffset = 0;
 
 int cells[][] = new int[gridWidth][gridHeight]; //Creates new array
 
@@ -121,7 +124,7 @@ void drawCells(int[][] cells){
   for (int i = 0; i <= gridHeight-1; i++){
     for (int j = 0; j <= gridWidth-1; j++){
       if(cells[j][i] == 1){
-          rect(j*100+5, i*100+5, 90, 90); 
+          rect((j*100)+xOffset+6, (i*100)+yOffset+5, 90, 90); 
       }
     }
   }
@@ -131,15 +134,18 @@ void drawGrid(){
   stroke(0);
   strokeWeight(1);
   for (int i = 0; i <= gridWidth-1; i++){
-    line(i*100, 0, i*100, 720);
+    line((i*100)+xOffset, 0, (i*100)+xOffset, 720);
   }
   for (int i = 0; i <= gridHeight-1; i++){
-    line(0, i*100, 1280, i*100);
+    line(0, (i*100)+yOffset, 1280, (i*100)+yOffset);
   }
 }
 
+
+
 void setup(){
   size(1280,720);
+  frameRate(30);
   createCells(cells);
 }
 
@@ -148,10 +154,20 @@ void draw(){
     //Logic stuff
     updateCells(cells);
     
+    int xShift = (mouseX - pmouseX);
+    int yShift = (mouseY - pmouseY);
+    
     //Mouse movement
     if (mousePressed == true){
       if (mouseButton == LEFT){
-        print(pmouseX + " " + mouseX + "\n ");
+        xOffset += xShift;
+        yOffset += yShift;
+        if (xOffset > 0){
+          xOffset = 0;
+        }
+        if (yOffset > 0){
+          yOffset = 0;
+        }
       }
     }
     
