@@ -1,15 +1,17 @@
 //Bandar Al Aish
-//Create varoable for x and y value     vvvvvv
 
-int cells[][] = new int[13][8]; //Creates new array
+int gridHeight = 8;
+int gridWidth = 13;
 
-int delayTime = 500; //Default value
+int cells[][] = new int[gridWidth][gridHeight]; //Creates new array
+
+int delayTime = 250; //Default value
 
 String gameState = "";
 
 void createCells(int[][] cells){
-  for (int y = 0; y <= 7; y++){
-    for (int x = 0; x <= 12; x++){
+  for (int y = 0; y <= gridHeight-1; y++){
+    for (int x = 0; x <= gridWidth-1; x++){
       if (random(0,1) > 0.5){
         cells[x][y] = 1;
       }
@@ -18,17 +20,17 @@ void createCells(int[][] cells){
 }
 
 void clearCells(int[][] cells){
-  for (int y = 0; y <= 7; y++){
-    for (int x = 0; x <= 12; x++){
+  for (int y = 0; y <= gridHeight-1; y++){
+    for (int x = 0; x <= gridWidth-1; x++){
       cells[x][y] = 0;
     }
   }
 }
 
 void updateCells(int[][] cells){
-  int nextGen[][] = new int[13][8];
-  for (int x = 0; x <= 12; x++){
-    for (int y = 0; y <= 7; y++){
+  int nextGen[][] = new int[gridWidth][gridHeight];
+  for (int x = 0; x <= gridWidth-1; x++){
+    for (int y = 0; y <= gridHeight-1; y++){
       int neighbors = checkNeighbors(x, y);
       if (cells[x][y] == 1){ //Alive cell
         if (neighbors == 2 || neighbors == 3){ 
@@ -48,8 +50,8 @@ void updateCells(int[][] cells){
   }
   
   //replaces old cells with the new generation
-  for (int x = 0; x <= 12; x++){
-    for (int y = 0; y <= 7; y++){
+  for (int x = 0; x <= gridWidth-1; x++){
+    for (int y = 0; y <= gridHeight-1; y++){
       cells[x][y] = nextGen[x][y];
     }
   }
@@ -60,7 +62,7 @@ int checkNeighbors(int x, int y){
   int neighbors = 0;
   
   //Bottom row
-  if (y != 7){
+  if (y != gridHeight-1){
     if (x != 0){
       if (cells[x-1][y+1] == 1){
         neighbors += 1;
@@ -71,7 +73,7 @@ int checkNeighbors(int x, int y){
         neighbors += 1;
     }
     
-    if(x!=12){
+    if(x!=gridWidth-1){
       if (cells[x+1][y+1] == 1){
           neighbors += 1;
       }
@@ -85,7 +87,7 @@ int checkNeighbors(int x, int y){
     }
   }
   
-  if (x != 12){
+  if (x != gridWidth-1){
     if (cells[x+1][y] == 1){
       neighbors += 1;
     }
@@ -104,7 +106,7 @@ int checkNeighbors(int x, int y){
         neighbors += 1;
     }
     
-    if (x != 12){
+    if (x != gridWidth-1){
       if (cells[x+1][y-1] == 1){
           neighbors += 1;
       }
@@ -116,8 +118,8 @@ int checkNeighbors(int x, int y){
 void drawCells(int[][] cells){
   fill(255,0,0);
   noStroke();
-  for (int i = 0; i <= 7; i++){
-    for (int j = 0; j <= 12; j++){
+  for (int i = 0; i <= gridHeight-1; i++){
+    for (int j = 0; j <= gridWidth-1; j++){
       if(cells[j][i] == 1){
           rect(j*100+5, i*100+5, 90, 90); 
       }
@@ -128,10 +130,10 @@ void drawCells(int[][] cells){
 void drawGrid(){
   stroke(0);
   strokeWeight(1);
-  for (int i = 0; i <= 12; i++){
+  for (int i = 0; i <= gridWidth-1; i++){
     line(i*100, 0, i*100, 720);
   }
-  for (int i = 0; i <= 7; i++){
+  for (int i = 0; i <= gridHeight-1; i++){
     line(0, i*100, 1280, i*100);
   }
 }
@@ -145,6 +147,13 @@ void draw(){
   if (gameState == "runCells"){
     //Logic stuff
     updateCells(cells);
+    
+    //Mouse movement
+    if (mousePressed == true){
+      if (mouseButton == LEFT){
+        print(pmouseX + " " + mouseX + "\n ");
+      }
+    }
     
     //drawing stuff
     background(200);
