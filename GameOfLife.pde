@@ -124,7 +124,10 @@ void drawCells(int[][] cells){
   for (int i = 0; i <= gridHeight-1; i++){
     for (int j = 0; j <= gridWidth-1; j++){
       if(cells[j][i] == 1){
-          rect((j*100)+xOffset+6, (i*100)+yOffset+5, 90, 90); 
+        if((-(j*100) <= xOffset == true) && (-(j*100) >= xOffset-1380 == true) &&
+            (-(i*100) <= yOffset == true) && (-(i*100) >= yOffset-820 == true)){ //Checks if it's on screen
+          rect((j*100)+xOffset+5, (i*100)+yOffset+5, 90, 90); 
+        }
       }
     }
   }
