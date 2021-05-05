@@ -1,10 +1,10 @@
 //Bandar Al Aish
-
 int gridHeight = 100;
 int gridWidth = 100;
 
 int xOffset = 0;
 int yOffset = 0;
+float scaleValue = 1;
 
 int cells[][] = new int[gridWidth][gridHeight]; //Creates new array
 
@@ -124,10 +124,7 @@ void drawCells(int[][] cells){
   for (int i = 0; i <= gridHeight-1; i++){
     for (int j = 0; j <= gridWidth-1; j++){
       if(cells[j][i] == 1){
-        if((-(j*100) <= xOffset == true) && (-(j*100) >= xOffset-1380 == true) &&
-            (-(i*100) <= yOffset == true) && (-(i*100) >= yOffset-820 == true)){ //Checks if it's on screen
-          rect((j*100)+xOffset+5, (i*100)+yOffset+5, 90, 90); 
-        }
+        rect((j*100)+xOffset+5, (i*100)+yOffset+5, 90, 90); 
       }
     }
   }
@@ -137,10 +134,10 @@ void drawGrid(){
   stroke(0);
   strokeWeight(1);
   for (int i = 0; i <= gridWidth-1; i++){
-    line((i*100)+xOffset, 0, (i*100)+xOffset, 720);
+    line(((i*100)+xOffset), 0, (i*100)+xOffset, gridHeight*100);
   }
   for (int i = 0; i <= gridHeight-1; i++){
-    line(0, (i*100)+yOffset, 1280, (i*100)+yOffset);
+    line(0, (i*100)+yOffset, gridWidth*100, (i*100)+yOffset);
   }
 }
 
@@ -175,6 +172,7 @@ void draw(){
     }
     
     //drawing stuff
+    scale(scaleValue);
     background(200);
     drawCells(cells);
     drawGrid();
@@ -216,5 +214,12 @@ void keyPressed(){
   } else if (key == 114){ //ASCII for r
     gameState = "runCells";
     createCells(cells);
+  } else if (key == 116){ //ASCII for t
+    scaleValue += 0.05;
+  } else if (key == 103){ //ASCII for g
+    if (scaleValue < 0){
+      scaleValue = 0;
+    }
+    scaleValue -= 0.05;
   }
 }
