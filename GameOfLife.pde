@@ -4,7 +4,7 @@ int gridWidth = 100;
 
 int xOffset = 0;
 int yOffset = 0;
-float scaleValue = 1;
+float scaleValue = 0.1;
 
 int cells[][] = new int[gridWidth][gridHeight]; //Creates new array
 
@@ -137,7 +137,7 @@ void drawGrid(){
     line(((i*100)+xOffset), 0, (i*100)+xOffset, gridHeight*100);
   }
   for (int i = 0; i <= gridHeight-1; i++){
-    line(0, (i*100)+yOffset, gridWidth*100, (i*100)+yOffset);
+    line(0, (i*100)+yOffset, gridWidth*100  , (i*100)+yOffset);
   }
 }
 
@@ -160,8 +160,8 @@ void draw(){
     //Mouse movement
     if (mousePressed == true){
       if (mouseButton == LEFT){
-        xOffset += xShift;
-        yOffset += yShift;
+        xOffset += xShift*(1/scaleValue)*2.5;
+        yOffset += yShift*(1/scaleValue)*2.5;
         if (xOffset > 0){
           xOffset = 0;
         }
